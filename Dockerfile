@@ -1,13 +1,14 @@
-FROM openjdk:11
-COPY build/libs/photo-album-console-app.jar /opt
-ADD entrypoint.sh /entrypoint.sh
-RUN chmod 755 entrypoint.sh
-RUN chmod 755 /opt/photo-album-console-app.jar
+ARG VERSION=8u151
 
-ENTRYPOINT ["sh", "/entrypoint.sh"]
+FROM openjdk:${VERSION}-jdk as BUILD
 
-# Easier but takes forever (copies everything and has to download gradle & fat jar it up - not fully tested)
-#FROM openjdk:11
-#COPY . .
-#
-#CMD ["./gradlew", "runShadow"]
+COPY . /src
+WORKDIR /src
+RUN ./gradlew --no-daemon shadowJar
+
+FROM openjdk:${VERSION}-jre
+
+COPY --from=BUILD /src/build/libs/photo-album-console-app.jar /bin/runner/run.jar
+WORKDIR /bin/runner
+
+CMD ["java","-jar","run.jar"]

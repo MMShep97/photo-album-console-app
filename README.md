@@ -34,18 +34,16 @@ Example:
 
 ### Options:
 
-Both will require having JDK installed, preferably `JDK >= 11`
+> Note: You can peak inside of the `Makefile` and run the commands individually if you don't have `Make` installed.
 
-#### Option 1
+#### Option 1 (containerized)
 
 Prerequisites: `Docker`, `Make`
 
-> You can peak inside of the `Makefile` and run the commands individually if you don't have `Make` installed.
+`make dockerRun`
 
-Simply run `make dockerRun`.
+#### Option 2 (local)
 
-#### Option 2
-
-Prerequisites: `Intellij`
+Prerequisites: `JDK >= 11`, `Intellij` (that should be all...)
 
 Navigate to `Main.kt` (`src/main/kotlin/photoalbum/Main.kt`) and hit the green run button!
